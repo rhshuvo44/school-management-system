@@ -30,6 +30,7 @@ This repository contains the source code for a **School Management Dashboard** b
 ### Prerequisites
 
 Ensure you have the following installed on your system:
+
 - [Node.js](https://nodejs.org/) (v16 or later)
 - [MongoDB](https://www.mongodb.com/)
 - A package manager (npm or yarn)
@@ -37,12 +38,14 @@ Ensure you have the following installed on your system:
 ### Steps
 
 1. **Clone the repository**:
+
    ```bash
    git clone https://github.com/your-username/school-management-dashboard.git
    cd school-management-dashboard
    ```
 
 2. **Install dependencies**:
+
    ```bash
    npm install
    # or
@@ -51,6 +54,7 @@ Ensure you have the following installed on your system:
 
 3. **Set up environment variables**:
    Create a `.env.local` file in the root directory and configure the following:
+
    ```env
    MONGODB_URI=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret_key
@@ -73,7 +77,7 @@ Ensure you have the following installed on your system:
 ├── public            # Static assets
 ├── src
 │   ├── components    # Reusable UI components
-│   ├── pages         # Next.js pages
+│   ├── app           # Next.js app
 │   ├── styles        # Global and module CSS
 │   ├── utils         # Utility functions
 │   ├── hooks         # Custom React hooks
@@ -122,9 +126,10 @@ This project is licensed under the [MIT License](LICENSE).
 ## Contact
 
 For any inquiries or support, please contact:
-- **Name**: Parvez
+
+- **Name**: Ripon Hossain Shuvo
 - **Email**: [your-email@example.com](mailto:your-email@example.com)
-- **GitHub**: [your-username](https://github.com/your-username)
+- **GitHub**: [rhshuvo44](https://github.com/rhshuvo44)
 
 ---
 

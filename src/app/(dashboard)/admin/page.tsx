@@ -1,3 +1,4 @@
+import Announcements from "@/components/modules/dashboard/Announcements";
 import AttendanceChart from "@/components/modules/dashboard/AttendanceChart";
 import CountChart from "@/components/modules/dashboard/CountChart";
 import EventCalender from "@/components/modules/dashboard/EventCalender";
@@ -33,6 +34,7 @@ const AdminPage = () => {
 
       <div className="w-full lg:w-1/3">
         <EventCalender />
+        <Announcements />
       </div>
     </div>
   );

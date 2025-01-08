@@ -45,7 +45,7 @@ const ParentsListPage = () => {
   const renderRow = (item: Parent) => (
     <tr
       key={item.id}
-      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
+      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-purpleLight"
     >
       <td className="flex flex-col gap-1 p-4">
         <span className=" font-semibold">{item.name}</span>
@@ -56,16 +56,17 @@ const ParentsListPage = () => {
       <td className="hidden md:table-cell">{item.address}</td>
       <td>
         <div className="flex items-center gap-2">
-          <Link href={`/list/parents/${item.id}`}>
-            <button className="w-7 h-7 bg-sky rounded-full flex items-center justify-center">
-              <Image src="/view.png" width={16} height={16} alt="edit" />
-            </button>
-          </Link>
-
           {role === "admin" && (
-            <button className="w-7 h-7 bg-purple rounded-full flex items-center justify-center">
-              <Image src="/delete.png" width={16} height={16} alt="" />
-            </button>
+            <>
+              <Link href={`/list/subjects/${item.id}`}>
+                <button className="w-7 h-7 bg-sky rounded-full flex items-center justify-center">
+                  <Image src="/view.png" width={16} height={16} alt="edit" />
+                </button>
+              </Link>
+              <button className="w-7 h-7 bg-purple rounded-full flex items-center justify-center">
+                <Image src="/delete.png" width={16} height={16} alt="" />
+              </button>
+            </>
           )}
         </div>
       </td>

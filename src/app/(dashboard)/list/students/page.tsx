@@ -1,7 +1,7 @@
 import Pagination from "@/components/ui/Pagination";
 import Table from "@/components/ui/Table";
 import TableSearch from "@/components/ui/TableSearch";
-import { role, studentsData, teachersData } from "@/lib/data";
+import { role, studentsData } from "@/lib/data";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -30,11 +30,6 @@ const columns = [
   {
     header: "Grade",
     accessor: "grade",
-    className: "hidden md:table-cell",
-  },
-  {
-    header: "Class",
-    accessor: "class",
     className: "hidden md:table-cell",
   },
   {
@@ -68,12 +63,11 @@ const StudentsListPage = () => {
         />
         <div className="flex flex-col gap-1">
           <span className=" font-semibold">{item.name}</span>
-          <span className="text-gray-500 text-xs">{item.email}</span>
+          <span className="text-gray-500 text-xs">{item.class}</span>
         </div>
       </td>
       <td className="hidden md:table-cell">{item.studentId}</td>
       <td className="hidden md:table-cell">{item.grade}</td>
-      <td className="hidden md:table-cell">{item.class}</td>
       <td className="hidden md:table-cell">{item.phone}</td>
       <td className="hidden md:table-cell">{item.address}</td>
       <td>
@@ -107,9 +101,11 @@ const StudentsListPage = () => {
             <button className="w-8 h-8 bg-yellow rounded-full flex items-center justify-center">
               <Image src="/sort.png" width={14} height={14} alt="add" />
             </button>
-            <button className="w-8 h-8 bg-yellow rounded-full flex items-center justify-center">
-              <Image src="/plus.png" width={14} height={14} alt="add" />
-            </button>
+            {role === "admin" && (
+              <button className="w-8 h-8 bg-yellow rounded-full flex items-center justify-center">
+                <Image src="/plus.png" width={14} height={14} alt="add" />
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import Announcements from "@/components/modules/dashboard/Announcements";
+import Performance from "@/components/modules/list/teacher/Performance";
 import BigCalender from "@/components/modules/student/BigCalender";
 
 const TeacherPage = () => {
@@ -13,6 +14,7 @@ const TeacherPage = () => {
       </div>
       {/* RIGHT */}
       <div className="w-full xl:w-1/3 flex flex-col gap-8 min-h-screen">
+     
         <Announcements />
       </div>
     </div>

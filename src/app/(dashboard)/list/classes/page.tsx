@@ -1,4 +1,3 @@
-
 import FormModal from "@/components/ui/FormModal";
 import Pagination from "@/components/ui/Pagination";
 import Table from "@/components/ui/Table";
@@ -52,7 +51,7 @@ const ClassListPage = async ({
   const renderRow = (item: ClassList) => (
     <tr
       key={item.id}
-      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
+      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-purpleLight"
     >
       <td className="flex items-center gap-4 p-4">{item.name}</td>
       <td className="hidden md:table-cell">{item.capacity}</td>

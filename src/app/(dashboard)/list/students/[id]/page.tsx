@@ -2,11 +2,9 @@ import Announcements from "@/components/modules/dashboard/Announcements";
 import StudentAttendanceCard from "@/components/modules/list/student/StudentAttendanceCard";
 import Performance from "@/components/modules/list/teacher/Performance";
 import BigCalendarContainer from "@/components/ui/BigCalendarContainer";
-import FormContainer from "@/components/ui/FormContainer";
 import FormModal from "@/components/ui/FormModal";
 import { role } from "@/lib/data";
 import prisma from "@/lib/prisma";
-import { auth } from "@clerk/nextjs/server";
 import { Class, Student } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -169,7 +167,7 @@ const SingleStudentPage = async ({
               Student&apos;s Lessons
             </Link>
             <Link
-              className="p-3 rounded-md bg-lamaPurpleLight"
+              className="p-3 rounded-md bg-purpleLight"
               href={`/list/teachers?classId=${student.class.id}`}
             >
               Student&apos;s Teachers

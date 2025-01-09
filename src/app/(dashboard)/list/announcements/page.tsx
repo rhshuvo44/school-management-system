@@ -21,34 +21,10 @@ const AnnouncementListPage = async ({
   // const currentUserId = userId;
   const currentUserId = "student1";
 
-  const columns = [
-    {
-      header: "Title",
-      accessor: "title",
-    },
-    {
-      header: "Class",
-      accessor: "class",
-    },
-    {
-      header: "Date",
-      accessor: "date",
-      className: "hidden md:table-cell",
-    },
-    ...(role === "admin"
-      ? [
-          {
-            header: "Actions",
-            accessor: "action",
-          },
-        ]
-      : []),
-  ];
-
   const renderRow = (item: AnnouncementList) => (
     <tr
       key={item.id}
-      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
+      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-purpleLight"
     >
       <td className="flex items-center gap-4 p-4">{item.title}</td>
       <td>{item.class?.name || "-"}</td>
@@ -94,9 +70,9 @@ const AnnouncementListPage = async ({
   // ROLE CONDITIONS
 
   const roleConditions = {
-    teacher: { lessons: { some: { teacherId: "currentUserId"! } } },
-    student: { students: { some: { id: "currentUserId"! } } },
-    parent: { students: { some: { parentId: "currentUserId"! } } },
+    teacher: { lessons: { some: { teacherId: currentUserId! } } },
+    student: { students: { some: { id: currentUserId! } } },
+    parent: { students: { some: { parentId: currentUserId! } } },
   };
 
   query.OR = [
@@ -139,7 +115,21 @@ const AnnouncementListPage = async ({
         </div>
       </div>
       {/* LIST  */}
-      <Table columns={announcementColumns} renderRow={renderRow} data={data} />
+      <Table
+        columns={[
+          ...announcementColumns,
+          ...(role === "admin"
+            ? [
+                {
+                  header: "Actions",
+                  accessor: "action",
+                },
+              ]
+            : []),
+        ]}
+        renderRow={renderRow}
+        data={data}
+      />
       {/* PAGINATION  */}
       <Pagination page={p} count={count} />
     </div>

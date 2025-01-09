@@ -1,9 +1,9 @@
 import Announcements from "@/components/modules/dashboard/Announcements";
 import Performance from "@/components/modules/list/teacher/Performance";
 import BigCalendarContainer from "@/components/ui/BigCalendarContainer";
-import FormContainer from "@/components/ui/FormContainer";
+import FormModal from "@/components/ui/FormModal";
+import { role } from "@/lib/data";
 import prisma from "@/lib/prisma";
-import { auth } from "@clerk/nextjs/server";
 import { Teacher } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,8 +14,8 @@ const SingleTeacherPage = async ({
 }: {
   params: { id: string };
 }) => {
-  const { sessionClaims } = auth();
-  const role = (sessionClaims?.metadata as { role?: string })?.role;
+  // const { sessionClaims } = auth();
+  // const role = (sessionClaims?.metadata as { role?: string })?.role;
 
   const teacher:
     | (Teacher & {
@@ -47,7 +47,7 @@ const SingleTeacherPage = async ({
           <div className="bg-lamaSky py-6 px-4 rounded-md flex-1 flex gap-4">
             <div className="w-1/3">
               <Image
-                src={teacher.img || "/noAvatar.png"}
+                src={teacher.img || "/avatar.png"}
                 alt=""
                 width={144}
                 height={144}
@@ -60,7 +60,8 @@ const SingleTeacherPage = async ({
                   {teacher.name + " " + teacher.surname}
                 </h1>
                 {role === "admin" && (
-                  <FormContainer table="teacher" type="update" data={teacher} />
+                  <FormModal table="teacher" type="update" data={teacher} />
+                  // <FormContainer table="teacher" type="update" data={teacher} />
                 )}
               </div>
               <p className="text-sm text-gray-500">

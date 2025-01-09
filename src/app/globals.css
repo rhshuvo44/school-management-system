@@ -51,8 +51,8 @@
 
 .rbc-time-content {
   border: none !important;
+  overflow: hidden;
 }
-
 .rbc-time-gutter.rbc-time-column {
   font-size: 12px !important;
 }
@@ -102,7 +102,7 @@
   background-color: #fdf2fb !important;
 }
 
-.rbc-event-label{
+.rbc-event-label {
   color: gray !important;
   margin-bottom: 5px;
 }

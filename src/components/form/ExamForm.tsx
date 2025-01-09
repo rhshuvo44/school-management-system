@@ -104,7 +104,7 @@ const ExamForm = ({
             {...register("lessonId")}
             defaultValue={data?.teachers}
           >
-            {lessons.map((lesson: { id: number; name: string }) => (
+            {lessons?.map((lesson: { id: number; name: string }) => (
               <option value={lesson.id} key={lesson.id}>
                 {lesson.name}
               </option>

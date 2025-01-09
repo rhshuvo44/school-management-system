@@ -1,9 +1,10 @@
-
 import Announcements from "@/components/modules/dashboard/Announcements";
 import StudentAttendanceCard from "@/components/modules/list/student/StudentAttendanceCard";
 import Performance from "@/components/modules/list/teacher/Performance";
 import BigCalendarContainer from "@/components/ui/BigCalendarContainer";
 import FormContainer from "@/components/ui/FormContainer";
+import FormModal from "@/components/ui/FormModal";
+import { role } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { Class, Student } from "@prisma/client";
@@ -17,8 +18,8 @@ const SingleStudentPage = async ({
 }: {
   params: { id: string };
 }) => {
-  const { sessionClaims } = auth();
-  const role = (sessionClaims?.metadata as { role?: string })?.role;
+  // const { sessionClaims } = auth();
+  // const role = (sessionClaims?.metadata as { role?: string })?.role;
 
   const student:
     | (Student & {
@@ -45,7 +46,7 @@ const SingleStudentPage = async ({
           <div className="bg-lamaSky py-6 px-4 rounded-md flex-1 flex gap-4">
             <div className="w-1/3">
               <Image
-                src={student.img || "/noAvatar.png"}
+                src={student.img || "/avatar.png"}
                 alt=""
                 width={144}
                 height={144}
@@ -58,7 +59,8 @@ const SingleStudentPage = async ({
                   {student.name + " " + student.surname}
                 </h1>
                 {role === "admin" && (
-                  <FormContainer table="student" type="update" data={student} />
+                  <FormModal table="student" type="update" data={student} />
+                  // <FormContainer table="student" type="update" data={student} />
                 )}
               </div>
               <p className="text-sm text-gray-500">

@@ -1,14 +1,13 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 
-import { clerkClient } from "@clerk/nextjs/server";
-import { SubjectSchema } from "@/schema/subjectSchema";
 import prisma from "@/lib/prisma";
 import { ClassSchema } from "@/schema/classSchema";
-import { TeacherSchema } from "@/schema/teacherSchema";
-import { StudentSchema } from "@/schema/studentSchema";
 import { ExamSchema } from "@/schema/examSchema";
+import { StudentSchema } from "@/schema/studentSchema";
+import { SubjectSchema } from "@/schema/subjectSchema";
+import { TeacherSchema } from "@/schema/teacherSchema";
+import { clerkClient } from "@clerk/nextjs/server";
 
 type CurrentState = { success: boolean; error: boolean };
 

@@ -1,10 +1,5 @@
-export type Announcement = {
-    id: number;
-    title: string;
-    class: string;
-    date: string;
-  };
- export type Assignment = {
+
+ export type TAssignment = {
     id: number;
     subject: string;
     class: string;

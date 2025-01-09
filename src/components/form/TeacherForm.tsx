@@ -171,7 +171,7 @@ const TeacherForm = ({
             {...register("subjects")}
             defaultValue={data?.subjects}
           >
-            {subjects.map((subject: { id: number; name: string }) => (
+            {subjects?.map((subject: { id: number; name: string }) => (
               <option value={subject.id} key={subject.id}>
                 {subject.name}
               </option>

@@ -89,7 +89,7 @@ const SubjectForm = ({
             {...register("teachers")}
             defaultValue={data?.teachers}
           >
-            {teachers.map(
+            {teachers?.map(
               (teacher: { id: string; name: string; surname: string }) => (
                 <option value={teacher.id} key={teacher.id}>
                   {teacher.name + " " + teacher.surname}

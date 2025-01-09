@@ -19,7 +19,7 @@ const AnnouncementListPage = async ({
   // const { userId, sessionClaims } = auth();
   // const role = (sessionClaims?.metadata as { role?: string })?.role;
   // const currentUserId = userId;
-  const currentUserId = "userId";
+  const currentUserId = "student1";
 
   const columns = [
     {

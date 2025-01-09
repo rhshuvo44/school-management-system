@@ -3,19 +3,14 @@ import Pagination from "@/components/ui/Pagination";
 import Table from "@/components/ui/Table";
 import TableSearch from "@/components/ui/TableSearch";
 import { role, studentsData } from "@/lib/data";
+import prisma from "@/lib/prisma";
+import { ITEM_PER_PAGE } from "@/lib/settings";
+import { Class, Grade, Prisma, Student, Subject } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
-type Student = {
-  id: number;
-  studentId: string;
-  name: string;
-  email?: string;
-  photo: string;
-  phone: string;
-  grade: number;
-  class: string;
-  address: string;
+type StudentList = Student & { subjects: Subject[] } & { class: Class } & {
+  grade: Grade;
 };
 
 const columns = [
@@ -48,15 +43,60 @@ const columns = [
     accessor: "action",
   },
 ];
-const StudentsListPage = () => {
-  const renderRow = (item: Student) => (
+const StudentsListPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) => {
+  const { page, ...queryParams } = searchParams;
+  const p = page ? parseInt(page) : 1;
+  // URL PARAMS CONDITION
+
+  const query: Prisma.StudentWhereInput = {};
+
+  if (queryParams) {
+    for (const [key, value] of Object.entries(queryParams)) {
+      if (value !== undefined) {
+        switch (key) {
+          case "teacherId":
+            query.class = {
+              lessons: {
+                some: {
+                  teacherId: value,
+                },
+              },
+            };
+            break;
+          case "search":
+            query.name = { contains: value, mode: "insensitive" };
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
+
+  const [data, count] = await prisma.$transaction([
+    prisma.student.findMany({
+      where: query,
+      include: {
+        class: true,
+        grade: true,
+      },
+      take: ITEM_PER_PAGE,
+      skip: ITEM_PER_PAGE * (p - 1),
+    }),
+    prisma.student.count({ where: query }),
+  ]);
+  const renderRow = (item: StudentList) => (
     <tr
       key={item.id}
       className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-purpleLight"
     >
       <td className="flex items-center gap-4 p-4">
         <Image
-          src={item.photo}
+          src={item.img || "/avatar.png"}
           width={40}
           height={40}
           alt="teacher"
@@ -64,11 +104,11 @@ const StudentsListPage = () => {
         />
         <div className="flex flex-col gap-1">
           <span className=" font-semibold">{item.name}</span>
-          <span className="text-gray-500 text-xs">{item.class}</span>
+          <span className="text-gray-500 text-xs">{item.class.name}</span>
         </div>
       </td>
-      <td className="hidden md:table-cell">{item.studentId}</td>
-      <td className="hidden md:table-cell">{item.grade}</td>
+      <td className="hidden md:table-cell">{item.username}</td>
+      <td className="hidden md:table-cell">{item.grade.level}</td>
       <td className="hidden md:table-cell">{item.phone}</td>
       <td className="hidden md:table-cell">{item.address}</td>
       <td>
@@ -105,9 +145,9 @@ const StudentsListPage = () => {
         </div>
       </div>
       {/* LIST  */}
-      <Table columns={columns} renderRow={renderRow} data={studentsData} />
+      <Table columns={columns} renderRow={renderRow} data={data} />
       {/* PAGINATION  */}
-      <Pagination />
+      <Pagination page={p} count={count} />
     </div>
   );
 };

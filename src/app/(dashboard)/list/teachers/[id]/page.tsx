@@ -1,9 +1,10 @@
 import Announcements from "@/components/modules/dashboard/Announcements";
 import Performance from "@/components/modules/list/teacher/Performance";
 import BigCalendarContainer from "@/components/ui/BigCalendarContainer";
+import FormContainer from "@/components/ui/FormContainer";
 import FormModal from "@/components/ui/FormModal";
-import { role } from "@/lib/data";
 import prisma from "@/lib/prisma";
+import { auth } from "@clerk/nextjs/server";
 import { Teacher } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,8 +15,8 @@ const SingleTeacherPage = async ({
 }: {
   params: { id: string };
 }) => {
-  // const { sessionClaims } = auth();
-  // const role = (sessionClaims?.metadata as { role?: string })?.role;
+  const { sessionClaims } = auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
 
   const teacher:
     | (Teacher & {
@@ -60,8 +61,7 @@ const SingleTeacherPage = async ({
                   {teacher.name + " " + teacher.surname}
                 </h1>
                 {role === "admin" && (
-                  <FormModal table="teacher" type="update" data={teacher} />
-                  // <FormContainer table="teacher" type="update" data={teacher} />
+                  <FormContainer table="teacher" type="update" data={teacher} />
                 )}
               </div>
               <p className="text-sm text-gray-500">

@@ -1,10 +1,10 @@
-import FormModal from "@/components/ui/FormModal";
+import FormContainer from "@/components/ui/FormContainer";
 import Pagination from "@/components/ui/Pagination";
 import Table from "@/components/ui/Table";
 import TableSearch from "@/components/ui/TableSearch";
-import { role } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
+import { auth } from "@clerk/nextjs/server";
 import { Class, Event, Prisma } from "@prisma/client";
 import Image from "next/image";
 
@@ -15,10 +15,9 @@ const EventListPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  // const { userId, sessionClaims } = auth();
-  // const role = (sessionClaims?.metadata as { role?: string })?.role;
-  // const currentUserId = userId;
-  const currentUserId = "userId";
+  const { userId, sessionClaims } = auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
+  const currentUserId = userId;
 
   const columns = [
     {
@@ -82,10 +81,8 @@ const EventListPage = async ({
         <div className="flex items-center gap-2">
           {role === "admin" && (
             <>
-              {/* <FormContainer table="event" type="update" data={item} />
-              <FormContainer table="event" type="delete" id={item.id} /> */}
-              <FormModal table="event" type="update" data={item} />
-              <FormModal table="event" type="delete" id={item.id} />
+              <FormContainer table="event" type="update" data={item} />
+              <FormContainer table="event" type="delete" id={item.id} />
             </>
           )}
         </div>
@@ -156,8 +153,7 @@ const EventListPage = async ({
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-yellow">
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
-            {role === "admin" && <FormModal table="event" type="create" />}
-            {/* {role === "admin" && <FormContainer table="event" type="create" />} */}
+            {role === "admin" && <FormContainer table="event" type="create" />}
           </div>
         </div>
       </div>

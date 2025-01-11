@@ -1,3 +1,4 @@
+import FormContainer from "@/components/ui/FormContainer";
 import FormModal from "@/components/ui/FormModal";
 import Pagination from "@/components/ui/Pagination";
 import Table from "@/components/ui/Table";
@@ -85,12 +86,8 @@ const SubjectsListPage = async ({
         <div className="flex items-center gap-2">
           {role === "admin" && (
             <>
-              <Link href={`/list/subjects/${item.id}`}>
-                <button className="w-7 h-7 bg-sky rounded-full flex items-center justify-center">
-                  <Image src="/view.png" width={16} height={16} alt="edit" />
-                </button>
-              </Link>
-              <FormModal table="subject" type="delete" id={item.id} />
+              <FormContainer table="subject" type="update" data={item} />
+              <FormContainer table="subject" type="delete" id={item.id} />
             </>
           )}
         </div>

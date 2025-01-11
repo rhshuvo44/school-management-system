@@ -2,16 +2,17 @@ import FormModal from "@/components/ui/FormModal";
 import Pagination from "@/components/ui/Pagination";
 import Table from "@/components/ui/Table";
 import TableSearch from "@/components/ui/TableSearch";
-import { role } from "@/lib/data";
+
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
+import { auth } from "@clerk/nextjs/server";
 import { Class, Prisma, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 type TeacherList = Teacher & { subjects: Subject[] } & { classes: Class[] };
 
-// const { sessionClaims } = auth();
-// const role = (sessionClaims?.metadata as { role?: string })?.role;
+const { sessionClaims } = auth();
+const role = (sessionClaims?.metadata as { role?: string })?.role;
 const columns = [
   {
     header: "Info",

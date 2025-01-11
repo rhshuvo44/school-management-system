@@ -1,10 +1,10 @@
-import FormModal from "@/components/ui/FormModal";
+import FormContainer from "@/components/ui/FormContainer";
 import Pagination from "@/components/ui/Pagination";
 import Table from "@/components/ui/Table";
 import TableSearch from "@/components/ui/TableSearch";
-import { role } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
+import { auth } from "@clerk/nextjs/server";
 import { Announcement, Class, Prisma } from "@prisma/client";
 import Image from "next/image";
 
@@ -14,10 +14,9 @@ const AnnouncementListPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  // const { userId, sessionClaims } = auth();
-  // const role = (sessionClaims?.metadata as { role?: string })?.role;
-  // const currentUserId = userId;
-  // const currentUserId = "student1";
+  const { userId, sessionClaims } = auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
+  const currentUserId = userId;
 
   const columns = [
     {
@@ -57,10 +56,8 @@ const AnnouncementListPage = async ({
         <div className="flex items-center gap-2">
           {role === "admin" && (
             <>
-              <FormModal table="announcement" type="update" data={item} />
-              <FormModal table="announcement" type="delete" id={item.id} />
-              {/* <FormContainer table="announcement" type="update" data={item} />
-              <FormContainer table="announcement" type="delete" id={item.id} /> */}
+              <FormContainer table="announcement" type="update" data={item} />
+              <FormContainer table="announcement" type="delete" id={item.id} />
             </>
           )}
         </div>
@@ -73,48 +70,47 @@ const AnnouncementListPage = async ({
 
   // URL PARAMS CONDITION
 
-  // const query: Prisma.AnnouncementWhereInput = {};
+  const query: Prisma.AnnouncementWhereInput = {};
 
-  // if (queryParams) {
-  //   for (const [key, value] of Object.entries(queryParams)) {
-  //     if (value !== undefined) {
-  //       switch (key) {
-  //         case "search":
-  //           query.title = { contains: value, mode: "insensitive" };
-  //           break;
-  //         default:
-  //           break;
-  //       }
-  //     }
-  //   }
-  // }
+  if (queryParams) {
+    for (const [key, value] of Object.entries(queryParams)) {
+      if (value !== undefined) {
+        switch (key) {
+          case "search":
+            query.title = { contains: value, mode: "insensitive" };
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
 
   // ROLE CONDITIONS
 
-  // const roleConditions = {
-  //   teacher: { lessons: { some: { teacherId: currentUserId! } } },
-  //   student: { students: { some: { id: currentUserId! } } },
-  //   parent: { students: { some: { parentId: currentUserId! } } },
-  // };
+  const roleConditions = {
+    teacher: { lessons: { some: { teacherId: currentUserId! } } },
+    student: { students: { some: { id: currentUserId! } } },
+    parent: { students: { some: { parentId: currentUserId! } } },
+  };
 
-  // query.OR = [
-  //   { classId: null },
-  //   {
-  //     class: roleConditions[role as keyof typeof roleConditions] || {},
-  //   },
-  // ];
+  query.OR = [
+    { classId: null },
+    {
+      class: roleConditions[role as keyof typeof roleConditions] || {},
+    },
+  ];
 
   const [data, count] = await prisma.$transaction([
     prisma.announcement.findMany({
-      // where: query,
+      where: query,
       include: {
         class: true,
       },
       take: ITEM_PER_PAGE,
       skip: ITEM_PER_PAGE * (p - 1),
     }),
-    // prisma.announcement.count({ where: query }),
-    prisma.announcement.count(),
+    prisma.announcement.count({ where: query }),
   ]);
 
   return (
@@ -134,8 +130,7 @@ const AnnouncementListPage = async ({
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
             {role === "admin" && (
-              <FormModal table="announcement" type="create" />
-              // <FormContainer table="announcement" type="create" />
+              <FormContainer table="announcement" type="create" />
             )}
           </div>
         </div>

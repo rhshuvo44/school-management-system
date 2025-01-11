@@ -2,25 +2,26 @@
 
 import Image from "next/image";
 import { RadialBar, RadialBarChart, ResponsiveContainer } from "recharts";
-const data = [
-  {
-    name: "Total",
-    count: 106,
-    fill: "#fff",
-  },
-  {
-    name: "Girls",
-    count: 50,
-    fill: "#FAE27C",
-  },
-  {
-    name: "Boys",
-    count: 50,
-    fill: "#83C3EBFA",
-  },
-];
 
-const RadialChart = () => {
+const RadialChart = ({ boys, girls }: { boys: number; girls: number }) => {
+  const data = [
+    {
+      name: "Total",
+      count: boys + girls,
+      fill: "#fff",
+    },
+    {
+      name: "Girls",
+      count: girls,
+      fill: "#FAE27C",
+    },
+    {
+      name: "Boys",
+      count: boys,
+      fill: "#83C3EBFA",
+    },
+  ];
+
   return (
     <div className="relative w-full h-[75%]">
       <ResponsiveContainer>

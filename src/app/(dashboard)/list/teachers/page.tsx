@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 type TeacherList = Teacher & { subjects: Subject[] } & { classes: Class[] };
 
+
 const TeacherListPage = async ({
   searchParams,
 }: {

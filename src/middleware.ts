@@ -8,7 +8,7 @@ const matchers = Object.keys(routeAccessMap).map((route) => ({
   allowedRoles: routeAccessMap[route],
 }));
 
-console.log(matchers);
+// console.log(matchers);
 
 export default clerkMiddleware((auth, req) => {
   // if (isProtectedRoute(req)) auth().protect()

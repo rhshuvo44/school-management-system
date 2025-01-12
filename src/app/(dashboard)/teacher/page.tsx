@@ -1,9 +1,9 @@
 import Announcements from "@/components/modules/dashboard/Announcements";
 import BigCalendarContainer from "@/components/ui/BigCalendarContainer";
+import { auth } from "@clerk/nextjs/server";
 
 const TeacherPage = () => {
-  const userId = "";
-  // const { userId } = auth();
+  const { userId } = auth();
   return (
     <div className="flex-1 p-4 flex gap-4 flex-col xl:flex-row">
       {/* LEFT */}
